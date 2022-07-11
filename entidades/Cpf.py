@@ -11,5 +11,5 @@ class Cpf(Documento):
         return self.__cpf
 
     @cpf.setter
-    def cpf(self, cpf:str):
+    def cpf(self, cpf: str):
         self.__cpf = cpf

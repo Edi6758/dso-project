@@ -20,3 +20,17 @@ class TelaSistema:
     def tela_login_sistema_incorreto(self):
         print("usuario e/ou senha incorretos")
 
+    def mostra_opcoes_tela_empresa_acessada(self):
+        print("---------MENU-----------"
+              "\nEscolha a opcao"
+              "\n1 - Cadastrar Usuario"
+              "\n2 - Listar Usuarios"
+              "\n3 - Editar Usuario"
+              "\n4 - Deletar Usuario"
+              "\n5 - Editar Endereço"
+              "\n6 - Deletar Endereco"
+              "\n7 - Listar Enderecos"
+              "\n0 - retornar")
+        opcao = int(input("qual a sua opção?"))
+        return opcao
+
