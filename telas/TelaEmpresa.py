@@ -1,16 +1,18 @@
 from telas.TelaEndereco import TelaEndereco
+from controles.ControladorEndereco import ControladorEndereco
 
 
 class TelaEmpresa:
     def __init__(self):
         self.__tela_endereco = TelaEndereco()
+        self.__controlador_endereco = ControladorEndereco()
 
     def mostra_cadastro_empresa(self):
         print("---------Cadastro Empresa-----------")
 
         nome = input("qual o nome da empresa?")
         cnpj = input("qual o cnpj da empresa")
-        endereco = self.__tela_endereco.mostra_cadastro_endereco()
+        endereco = self.__controlador_endereco.cadastra_endereco()
 
         return {'nome': nome, 'cnpj': cnpj, 'endereco': endereco}
 
@@ -32,3 +34,6 @@ class TelaEmpresa:
 
     def empresa_excluida_com_sucesso(self):
         print('empresa excluida com sucesso')
+
+    def empresa_duplicada(self):
+        print('essa empresa já foi cadastrada')

@@ -11,7 +11,15 @@ class ControladorEmpresa:
     def cadastrar_empresa(self):
         dados_empresa = self.__tela_empresa.mostra_cadastro_empresa()
         empresa = Empresa(dados_empresa['nome'], dados_empresa['cnpj'], dados_empresa['endereco'])
-        self.__empresas_cadastradas.append(empresa)
+        if self.__empresas_cadastradas:
+            for i in self.__empresas_cadastradas:
+                if i.cnpj == empresa.cnpj:
+                    self.__tela_empresa.empresa_duplicada()
+                    break
+            else:
+                self.__empresas_cadastradas.append(empresa)
+        else:
+            self.__empresas_cadastradas.append(empresa)
         print(self.__empresas_cadastradas)
 
     def listar_nomes_empresas_cadastradas(self):
@@ -26,9 +34,9 @@ class ControladorEmpresa:
             for i in self.__empresas_cadastradas:
                 if i.nome == empresa_a_ser_acessada:
                     self.__tela_empresa.empresa_acessada_com_sucesso()
-                    return True
-                else:
-                    return False
+                    return i
+            else:
+                return False
 
 
     def excluir_empresa(self):
@@ -39,5 +47,5 @@ class ControladorEmpresa:
                     self.__empresas_cadastradas.remove(i)
                     self.__tela_empresa.empresa_excluida_com_sucesso()
                     return True
-                else:
-                    return False
+            else:
+                return False
