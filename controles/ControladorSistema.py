@@ -19,6 +19,15 @@ class ControladorSistema:
     def encerra(self):
         exit(0)
 
+    def valida_login(self, dados_login):
+        if dados_login == ("admin", "admin"):
+            return True
+        else:
+            pass
+            #pegar o controlador de empresas, a lista de empresas
+            #para cada empresa pegar a lista de usuarios
+            #comparar login e senha com cada usuario de cada empresa
+
     def abre_tela(self):
         while True:
             if self.__tela_sistema.tela_login_sistema() == "admin" and "admin":
@@ -29,24 +38,25 @@ class ControladorSistema:
                     elif opcao == 2:
                         self.__controlador_empresa.listar_nomes_empresas_cadastradas()
                         empresa_acessada = self.__controlador_empresa.acessar_empresa()
-                        while True:
-                            opcao_empresa_acessada = self.__tela_sistema.mostra_opcoes_tela_empresa_acessada()
-                            if opcao_empresa_acessada == 1:
-                                empresa_acessada.cadastrar_usuario()
-                            elif opcao_empresa_acessada == 2:
-                                empresa_acessada.listar_usuario()
-                            elif opcao_empresa_acessada == 3:
-                                empresa_acessada.editar_usuario()
-                            elif opcao_empresa_acessada == 4:
-                                empresa_acessada.excluir_usuario()
-                            elif opcao_empresa_acessada == 5:
-                                self.__controlador_endereco.editar_endereco()
-                            elif opcao_empresa_acessada == 6:
-                                self.__controlador_endereco.excluir_endereco()
-                            elif opcao_empresa_acessada == 7:
-                                self.__controlador_endereco.listar_enderecos()
-                            elif opcao_empresa_acessada == 0:
-                                break
+                        if empresa_acessada is True:
+                            while True:
+                                opcao_empresa_acessada = self.__tela_sistema.mostra_opcoes_tela_empresa_acessada()
+                                if opcao_empresa_acessada == 1:
+                                    empresa_acessada.cadastrar_usuario()
+                                elif opcao_empresa_acessada == 2:
+                                    empresa_acessada.listar_usuario()
+                                elif opcao_empresa_acessada == 3:
+                                    empresa_acessada.editar_usuario()
+                                elif opcao_empresa_acessada == 4:
+                                    empresa_acessada.excluir_usuario()
+                                elif opcao_empresa_acessada == 5:
+                                    self.__controlador_endereco.editar_endereco()
+                                elif opcao_empresa_acessada == 6:
+                                    self.__controlador_endereco.excluir_endereco()
+                                elif opcao_empresa_acessada == 7:
+                                    self.__controlador_endereco.listar_enderecos()
+                                elif opcao_empresa_acessada == 0:
+                                    break
                     elif opcao == 3:
                         self.__controlador_empresa.listar_nomes_empresas_cadastradas()
                         self.__controlador_empresa.excluir_empresa()

@@ -34,7 +34,7 @@ class ControladorEmpresa:
             for i in self.__empresas_cadastradas:
                 if i.nome == empresa_a_ser_acessada:
                     self.__tela_empresa.empresa_acessada_com_sucesso()
-                    return i
+                    return True
             else:
                 return False
 
