@@ -2,7 +2,6 @@ from telas.TelaSistema import TelaSistema
 from controles.ControladorEmpresa import ControladorEmpresa
 from controles.ControladorUsuario import ControladorUsuario
 from controles.ControladorEndereco import ControladorEndereco
-from entidades.Empresa import Empresa
 
 
 class ControladorSistema:
@@ -38,7 +37,7 @@ class ControladorSistema:
                     elif opcao == 2:
                         self.__controlador_empresa.listar_nomes_empresas_cadastradas()
                         empresa_acessada = self.__controlador_empresa.acessar_empresa()
-                        if empresa_acessada is True:
+                        if empresa_acessada:
                             while True:
                                 opcao_empresa_acessada = self.__tela_sistema.mostra_opcoes_tela_empresa_acessada()
                                 if opcao_empresa_acessada == 1:
@@ -50,11 +49,11 @@ class ControladorSistema:
                                 elif opcao_empresa_acessada == 4:
                                     empresa_acessada.excluir_usuario()
                                 elif opcao_empresa_acessada == 5:
-                                    self.__controlador_endereco.editar_endereco()
+                                    empresa_acessada.cadastrar_endereco()
                                 elif opcao_empresa_acessada == 6:
-                                    self.__controlador_endereco.excluir_endereco()
+                                    empresa_acessada.excluir_endereco()
                                 elif opcao_empresa_acessada == 7:
-                                    self.__controlador_endereco.listar_enderecos()
+                                    empresa_acessada.listar_enderecos()
                                 elif opcao_empresa_acessada == 0:
                                     break
                     elif opcao == 3:

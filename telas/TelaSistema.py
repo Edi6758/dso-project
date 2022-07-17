@@ -27,7 +27,7 @@ class TelaSistema:
               "\n2 - Listar Usuarios"
               "\n3 - Editar Usuario"
               "\n4 - Deletar Usuario"
-              "\n5 - Editar Endereço"
+              "\n5 - Cadastrar Endereço"
               "\n6 - Deletar Endereco"
               "\n7 - Listar Enderecos"
               "\n0 - retornar")

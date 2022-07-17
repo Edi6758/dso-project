@@ -10,7 +10,7 @@ class ControladorEmpresa:
 
     def cadastrar_empresa(self):
         dados_empresa = self.__tela_empresa.mostra_cadastro_empresa()
-        empresa = Empresa(dados_empresa['nome'], dados_empresa['cnpj'], dados_empresa['endereco'])
+        empresa = Empresa(dados_empresa['nome'], dados_empresa['cnpj'])
         if self.__empresas_cadastradas:
             for i in self.__empresas_cadastradas:
                 if i.cnpj == empresa.cnpj:
@@ -29,12 +29,14 @@ class ControladorEmpresa:
 
     def acessar_empresa(self):
         empresa_a_ser_acessada = self.__tela_empresa.acessar_empresa()
+        contador = 0
 
         if self.__empresas_cadastradas:
             for i in self.__empresas_cadastradas:
                 if i.nome == empresa_a_ser_acessada:
                     self.__tela_empresa.empresa_acessada_com_sucesso()
-                    return True
+                    contador += 1
+                    return i
             else:
                 return False
 
