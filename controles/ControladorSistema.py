@@ -29,7 +29,8 @@ class ControladorSistema:
 
     def abre_tela(self):
         while True:
-            if self.__tela_sistema.tela_login_sistema() == "admin" and "admin":
+            if self.__tela_sistema.tela_login_sistema() is True:
+                self.__tela_sistema.logado_com_sucesso()
                 while True:
                     opcao = self.__tela_sistema.mostra_opcoes_tela_inicial()
                     if opcao == 1:
@@ -62,4 +63,4 @@ class ControladorSistema:
                     elif opcao == 0:
                         self.encerra()
             else:
-                self.__tela_sistema.tela_login_sistema_incorreto()
+                break
