@@ -12,9 +12,8 @@ class TelaEmpresa:
 
         nome = input("qual o nome da empresa?")
         cnpj = input("qual o cnpj da empresa")
-        endereco = self.__controlador_endereco.cadastra_endereco()
 
-        return {'nome': nome, 'cnpj': cnpj, 'endereco': endereco}
+        return {'nome': nome, 'cnpj': cnpj}
 
     def menu_nomes_empresas(self):
         print('---------Menu das Empresas Cadastradas---------')

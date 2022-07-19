@@ -11,5 +11,5 @@ class Documento(ABC):
         return self.__nome
 
     @nome.setter
-    def nome(selfself, nome: str):
+    def nome(self, nome: str):
         self.__nome = nome
