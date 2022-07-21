@@ -1,5 +1,6 @@
 from telas.TelaEndereco import TelaEndereco
 from controles.ControladorEndereco import ControladorEndereco
+import PySimpleGUI as sg
 
 
 class TelaEmpresa:
@@ -8,12 +9,25 @@ class TelaEmpresa:
         self.__controlador_endereco = ControladorEndereco()
 
     def mostra_cadastro_empresa(self):
-        print("---------Cadastro Empresa-----------")
+        layout = [
+            [sg.Text('qual o nome da empresa?')],
+            [sg.Input(key='nome')],
+            [sg.Text('qual o cnpj da empresa?')],
+            [sg.Input(key='cnpj')],
+            [sg.Button('Cadastrar')]
+        ]
 
-        nome = input("qual o nome da empresa?")
-        cnpj = input("qual o cnpj da empresa")
+        window = sg.Window('Cadastro Empresa', layout=layout)
 
-        return {'nome': nome, 'cnpj': cnpj}
+        event, values = window.read()
+        while True:
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'Cadastrar':
+                nome = values['nome']
+                cnpj = values['cnpj']
+                window.close()
+                return {'nome': nome, 'cnpj': cnpj}
 
     def menu_nomes_empresas(self):
         print('---------Menu das Empresas Cadastradas---------')

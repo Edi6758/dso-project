@@ -3,14 +3,31 @@ import PySimpleGUI as sg
 
 class TelaSistema:
     def mostra_opcoes_tela_inicial(self):
-        print("---------MENU-----------"
-              "\nEscolha a opcao"
-              "\n1 - Cadastrar Empresa"
-              "\n2 - Acessar Empresa"
-              "\n3 - Deletar Empresa"
-              "\n0 - Encerrar")
-        opcao = int(input("qual a sua opção?"))
-        return opcao
+        layout = [
+            [sg.Text(' O que você deseja fazer?')],
+
+            [sg.Button('cadastrar Empresa', size=(30, 3))],
+
+            [sg.Button('acessar Empresa', size=(30, 3))],
+
+            [sg.Button('deletar Empresa', size=(30, 3))],
+
+        ]
+
+        window = sg.Window('Menu Sistema', layout=layout, size=(250, 250))
+
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED:
+            return 0
+        elif event == 'cadastrar Empresa':
+            window.close()
+            return 1
+        elif event == 'acessar Empresa':
+            window.close()
+            return 2
+        elif event == 'deletar Empresa':
+            window.close()
+            return 3
 
     def tela_login_sistema(self):
         layout = [
@@ -23,7 +40,7 @@ class TelaSistema:
         ]
 
         window = sg.Window('login', layout=layout)
-
+        resultado = False
         while True:
             event, values = window.read()
             if event == sg.WINDOW_CLOSED:
@@ -35,7 +52,9 @@ class TelaSistema:
                 senha = values['senha']
                 if usuario == usuario_correto and senha == senha_correta:
                     window['mensagem'].update('login feito com sucesso')
-                    return True
+                    resultado = True
+                    window.close()
+                    return resultado
                 else:
                     window['mensagem'].update('login ou senha incorretos')
 
@@ -66,4 +85,5 @@ class TelaSistema:
             if event == sg.WINDOW_CLOSED:
                 break
             elif event == 'OK':
+                window.close()
                 break
