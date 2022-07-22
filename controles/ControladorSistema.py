@@ -58,7 +58,6 @@ class ControladorSistema:
                                 elif opcao_empresa_acessada == 0:
                                     break
                     elif opcao == 3:
-                        self.__controlador_empresa.listar_nomes_empresas_cadastradas()
                         self.__controlador_empresa.excluir_empresa()
                     elif opcao == 0:
                         break

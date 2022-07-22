@@ -40,10 +40,26 @@ class TelaEmpresa:
     def empresa_acessada_com_sucesso(self):
         print('empresa acessada com sucesso')
 
-    def excluir_empresa(self):
-        print("---------MENU DE EXCLUSÃO-----------")
-        empresa_escolhida = input('qual o nome da empresa que deseja excluir?')
-        return empresa_escolhida
+    def excluir_empresa(self, lista: list):
+        lista_empresa = lista
+        layout = [
+            [sg.Text('Escreva o nome da Empresa a ser excluída:')],
+            [sg.Input(key='empresa')],
+            [sg.Button('excluir'), sg.Button('Listar')]
+        ]
+
+
+        window = sg.Window('Menu Exclusão', layout=layout, size=(250,200))
+        while True:
+            event, values = window.read()
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'Listar':
+                sg.popup_scrolled(*lista_empresa, title='Lista de Empresas')
+            elif event == 'excluir':
+                empresa_selecionada = values['empresa']
+                window.close()
+                return empresa_selecionada
 
     def empresa_excluida_com_sucesso(self):
         print('empresa excluida com sucesso')
