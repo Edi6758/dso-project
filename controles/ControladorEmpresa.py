@@ -24,8 +24,10 @@ class ControladorEmpresa:
 
     def listar_nomes_empresas_cadastradas(self):
         self.__tela_empresa.menu_nomes_empresas()
+        lista = []
         for i in self.__empresas_cadastradas:
-            print('   ', i.nome)
+            lista.append(i.nome)
+        return lista
 
     def acessar_empresa(self):
         empresa_a_ser_acessada = self.__tela_empresa.acessar_empresa()
@@ -42,7 +44,7 @@ class ControladorEmpresa:
 
 
     def excluir_empresa(self):
-        empresa_a_ser_excluida = self.__tela_empresa.excluir_empresa()
+        empresa_a_ser_excluida = self.__tela_empresa.excluir_empresa(lista=self.listar_nomes_empresas_cadastradas())
         if self.__empresas_cadastradas:
             for i in self.__empresas_cadastradas:
                 if i.nome == empresa_a_ser_excluida:
