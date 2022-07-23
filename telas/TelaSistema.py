@@ -59,18 +59,44 @@ class TelaSistema:
                     window['mensagem'].update('login ou senha incorretos')
 
     def mostra_opcoes_tela_empresa_acessada(self):
-        print("---------MENU-----------"
-              "\nEscolha a opcao"
-              "\n1 - Cadastrar Usuario"
-              "\n2 - Listar Usuarios"
-              "\n3 - Editar Usuario"
-              "\n4 - Deletar Usuario"
-              "\n5 - Cadastrar Endereço"
-              "\n6 - Deletar Endereco"
-              "\n7 - Listar Enderecos"
-              "\n0 - retornar")
-        opcao = int(input("qual a sua opção?"))
-        return opcao
+        lista_usuario = ['oi']
+        layout = [
+            [sg.Text(' O que você deseja fazer?')],
+            [sg.Button('Cadastrar Usuario', size=(30, 3))],
+            [sg.Button('Listar Usuario', size=(30, 3))],
+            [sg.Button('Editar Usuario', size=(30, 3))],
+            [sg.Button('Deletar Usuario', size=(30, 3))],
+            [sg.Button('Cadastrar Endereço', size=(30, 3))],
+            [sg.Button('Deletar Endereço', size=(30, 3))],
+            [sg.Button('Listar Endereço', size=(30, 3))],
+        ]
+
+        window = sg.Window('Menu Empresa', layout=layout,)
+
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            return 0
+        elif event == 'Cadastrar Usuario':
+            window.close()
+            return 1
+        elif event == 'Listar Usuario':
+            sg.popup_scrolled(*lista_usuario, title='Lista de Empresas')
+        elif event == 'Editar Usuario':
+            window.close()
+            return 3
+        elif event == 'Deletar Usuario':
+            window.close()
+            return 4
+        elif event == 'Cadastrar Endereço':
+            window.close()
+            return 5
+        elif event == 'Deletar Endereço':
+            window.close()
+            return 6
+        elif event == 'Listar Endereço':
+            window.close()
+            return 7
 
     def logado_com_sucesso(self):
         layout = [
@@ -87,3 +113,4 @@ class TelaSistema:
             elif event == 'OK':
                 window.close()
                 break
+

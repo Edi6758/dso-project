@@ -36,7 +36,6 @@ class ControladorSistema:
                     if opcao == 1:
                         self.__controlador_empresa.cadastrar_empresa()
                     elif opcao == 2:
-                        self.__controlador_empresa.listar_nomes_empresas_cadastradas()
                         empresa_acessada = self.__controlador_empresa.acessar_empresa()
                         if empresa_acessada:
                             while True:
