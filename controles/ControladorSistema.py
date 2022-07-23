@@ -38,16 +38,17 @@ class ControladorSistema:
                     elif opcao == 2:
                         empresa_acessada = self.__controlador_empresa.acessar_empresa()
                         if empresa_acessada:
+                            self.__controlador_usuario.usuarios = empresa_acessada.usuarios
                             while True:
                                 opcao_empresa_acessada = self.__tela_sistema.mostra_opcoes_tela_empresa_acessada()
                                 if opcao_empresa_acessada == 1:
-                                    empresa_acessada.cadastrar_usuario()
+                                    self.__controlador_usuario.cadastrar_usuario()
                                 elif opcao_empresa_acessada == 2:
-                                    empresa_acessada.listar_usuario()
+                                    self.__controlador_usuario.listar_usuario()
                                 elif opcao_empresa_acessada == 3:
-                                    empresa_acessada.editar_usuario()
+                                    self.__controlador_usuario.editar_usuario()
                                 elif opcao_empresa_acessada == 4:
-                                    empresa_acessada.excluir_usuario()
+                                    self.__controlador_usuario.excluir_usuario()
                                 elif opcao_empresa_acessada == 5:
                                     empresa_acessada.cadastrar_endereco()
                                 elif opcao_empresa_acessada == 6:

@@ -59,7 +59,6 @@ class TelaSistema:
                     window['mensagem'].update('login ou senha incorretos')
 
     def mostra_opcoes_tela_empresa_acessada(self):
-        lista_usuario = ['oi']
         layout = [
             [sg.Text(' O que você deseja fazer?')],
             [sg.Button('Cadastrar Usuario', size=(30, 3))],
@@ -81,7 +80,8 @@ class TelaSistema:
             window.close()
             return 1
         elif event == 'Listar Usuario':
-            sg.popup_scrolled(*lista_usuario, title='Lista de Empresas')
+            window.close()
+            return 2
         elif event == 'Editar Usuario':
             window.close()
             return 3
