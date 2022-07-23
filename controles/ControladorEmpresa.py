@@ -7,6 +7,7 @@ class ControladorEmpresa:
     def __init__(self):
         self.__empresas_cadastradas = []
         self.__tela_empresa = TelaEmpresa()
+        self.__empresa_acessada = None
 
     def cadastrar_empresa(self):
         dados_empresa = self.__tela_empresa.mostra_cadastro_empresa()
@@ -38,6 +39,7 @@ class ControladorEmpresa:
                 if i.nome == empresa_a_ser_acessada:
                     self.__tela_empresa.empresa_acessada_com_sucesso()
                     contador += 1
+                    self.__empresa_acessada = i
                     return i
             else:
                 return False
@@ -53,3 +55,7 @@ class ControladorEmpresa:
                     return True
             else:
                 return False
+
+    @property
+    def empresa_acessada(self):
+        return self.__empresa_acessada
