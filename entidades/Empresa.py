@@ -34,7 +34,7 @@ class Empresa:
 
     def cadastrar_usuario(self):
         dados_usuario = self.__tela_usuario.cadastrar_usuario()
-        usuario = Usuario(dados_usuario['nome'],dados_usuario['cpf'], dados_usuario['rg'],dados_usuario['email'], dados_usuario['senha'])
+        usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'], dados_usuario['rg'],dados_usuario['email'], dados_usuario['senha'])
 
         if self.__usuarios:
             for i in self.__usuarios:

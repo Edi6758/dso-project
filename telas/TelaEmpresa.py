@@ -32,14 +32,41 @@ class TelaEmpresa:
     def menu_nomes_empresas(self):
         print('---------Menu das Empresas Cadastradas---------')
 
-    def acessar_empresa(self):
-        print("---------MENU DE ACESSO-----------")
-        empresa_escolhida = input('qual o nome da empresa que deseja acessar?')
-        return empresa_escolhida
+    def acessar_empresa(self, lista: list):
+        lista_empresa = lista
+        layout = [
+            [sg.Text('Escreva o nome da Empresa a ser acessada:')],
+            [sg.Input(key='empresa')],
+            [sg.Button('acessar'), sg.Button('Listar')]
+        ]
+
+        window = sg.Window('Menu de Acesso', layout=layout, size=(300, 150))
+        while True:
+            event, values = window.read()
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'Listar':
+                sg.popup_scrolled(*lista_empresa, title='Lista de Empresas')
+            elif event == 'acessar':
+                empresa_selecionada = values['empresa']
+                window.close()
+                return empresa_selecionada
 
     def empresa_acessada_com_sucesso(self):
-        print('empresa acessada com sucesso')
+        layout = [
+            [sg.Text('acessado com sucesso')],
+            [sg.Button('OK')],
+        ]
 
+        window = sg.Window('acesso', layout=layout)
+
+        while True:
+            event, values = window.read()
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'OK':
+                window.close()
+                break
     def excluir_empresa(self, lista: list):
         lista_empresa = lista
         layout = [
@@ -48,8 +75,7 @@ class TelaEmpresa:
             [sg.Button('excluir'), sg.Button('Listar')]
         ]
 
-
-        window = sg.Window('Menu Exclusão', layout=layout, size=(250,200))
+        window = sg.Window('Menu Exclusão', layout=layout, size=(300, 150))
         while True:
             event, values = window.read()
             if event == sg.WINDOW_CLOSED:
@@ -61,8 +87,22 @@ class TelaEmpresa:
                 window.close()
                 return empresa_selecionada
 
+
     def empresa_excluida_com_sucesso(self):
-        print('empresa excluida com sucesso')
+        layout = [
+            [sg.Text('excluido com sucesso')],
+            [sg.Button('OK')],
+        ]
+
+        window = sg.Window('excluido', layout=layout)
+
+        while True:
+            event, values = window.read()
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'OK':
+                window.close()
+                break
 
     def empresa_duplicada(self):
         print('essa empresa já foi cadastrada')
