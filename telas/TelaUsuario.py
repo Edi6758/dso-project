@@ -1,6 +1,5 @@
 import PySimpleGUI as sg
 
-
 class TelaUsuario:
     def cadastrar_usuario(self):
         layout = [
@@ -39,19 +38,92 @@ class TelaUsuario:
         opcao = input('qual o cnpj da empresa que vc quer cadastrar o usuario?')
         return opcao
 
-    def qual_o_usuario(self):
-        opcao = input('qual o cpf do usuario que vc quer excluir ou editar?')
-        return opcao
+    def qual_o_usuario_a_excluir(self):
+        layout = [
+            [sg.Text('qual o cpf do usuario que você deseja excluir?')],
+            [sg.Input(key='usuario')],
+            [sg.Button('Excluir')]
+        ]
+
+        window = sg.Window('Exclusão Usuario', layout=layout)
+
+        event, values = window.read()
+        while True:
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'Excluir':
+                cpf = values['usuario']
+                window.close()
+                return cpf
+
+    def qual_o_usuario_a_editar(self):
+        layout = [
+            [sg.Text('qual o cpf do usuario que você deseja Editar?')],
+            [sg.Input(key='usuario')],
+            [sg.Button('Editar')]
+        ]
+
+        window = sg.Window('Editar Usuario', layout=layout)
+
+        event, values = window.read()
+        while True:
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'Editar':
+                cpf = values['usuario']
+                window.close()
+                return cpf
+
 
     def mostra_opcoes_para_alterar(self):
-        print('------ ALTERAR ------'
-              '\n1 - alterar nome '
-              '\n2 - alterar cpf'
-              '\n3 - alterar rg'
-              '\n4 - alterar email'
-              '\n5 - alterar senha')
-        opcao = input('qual a opcao?')
-        return opcao
+        layout = [
+            [sg.Text('Qual dado você deseja alterar?')],
+            [sg.Button('NOME')],
+            [sg.Button('CPF')],
+            [sg.Button('RG')],
+            [sg.Button('EMAIL')],
+            [sg.Button('SENHA')],
+        ]
+
+        window = sg.Window('opções dados', layout=layout)
+
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            window.close()
+        elif event == 'NOME':
+            window.close()
+            return 1
+        elif event == 'CPF':
+            window.close()
+            return 2
+        elif event == 'RG':
+            window.close()
+            return 3
+        elif event == 'EMAIL':
+            window.close()
+            return 4
+        elif event == 'SENHA':
+            window.close()
+            return 5
+
 
     def recebe_novo_dado(self):
-        return input('qual o novo dado')
+        layout = [
+            [sg.Text('qual o novo dado?')],
+            [sg.Input(key='dado')],
+            [sg.Button('editar')]
+        ]
+        window = sg.Window('novo dado', layout=layout)
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            window.close()
+        elif event == 'editar':
+            dados = values['dado']
+            return dados
+    def listar_usuarios(self, lista: []):
+        lista = lista
+        layout = [
+            sg.popup_scrolled(*lista, title='lista usuarios')
+        ]
