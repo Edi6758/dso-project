@@ -1,5 +1,6 @@
 from telas.TelaEmpresa import TelaEmpresa
 from entidades.Empresa import Empresa
+from DAO.EmpresaDAO import EmpresaDAO
 
 
 class ControladorEmpresa:
@@ -8,6 +9,7 @@ class ControladorEmpresa:
         self.__empresas_cadastradas = []
         self.__tela_empresa = TelaEmpresa()
         self.__empresa_acessada = None
+        self.__empresaDao = EmpresaDAO()
 
     def cadastrar_empresa(self):
         dados_empresa = self.__tela_empresa.mostra_cadastro_empresa()
@@ -22,6 +24,7 @@ class ControladorEmpresa:
         else:
             self.__empresas_cadastradas.append(empresa)
         print(self.__empresas_cadastradas)
+        self.__empresaDao.add(empresa.cnpj, empresa=empresa)
 
     def listar_nomes_empresas_cadastradas(self):
         self.__tela_empresa.menu_nomes_empresas()

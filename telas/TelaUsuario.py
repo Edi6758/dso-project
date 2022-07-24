@@ -122,6 +122,7 @@ class TelaUsuario:
         elif event == 'editar':
             dados = values['dado']
             return dados
+
     def listar_usuarios(self, lista: []):
         lista = lista
         layout = [
