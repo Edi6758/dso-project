@@ -18,15 +18,6 @@ class ControladorSistema:
     def encerra(self):
         exit(0)
 
-    def valida_login(self, dados_login):
-        if dados_login == ("admin", "admin"):
-            return True
-        else:
-            pass
-            #pegar o controlador de empresas, a lista de empresas
-            #para cada empresa pegar a lista de usuarios
-            #comparar login e senha com cada usuario de cada empresa
-
     def abre_tela(self):
         while True:
             if self.__tela_sistema.tela_login_sistema() is True:
@@ -50,11 +41,11 @@ class ControladorSistema:
                                 elif opcao_empresa_acessada == 4:
                                     self.__controlador_usuario.excluir_usuario()
                                 elif opcao_empresa_acessada == 5:
-                                    empresa_acessada.cadastrar_endereco()
+                                    self.__controlador_endereco.cadastrar_endereco()
                                 elif opcao_empresa_acessada == 6:
-                                    empresa_acessada.excluir_endereco()
+                                    self.__controlador_endereco.excluir_endereco()
                                 elif opcao_empresa_acessada == 7:
-                                    empresa_acessada.listar_enderecos()
+                                    self.__controlador_endereco.listar_enderecos()
                                 elif opcao_empresa_acessada == 0:
                                     break
                     elif opcao == 3:
