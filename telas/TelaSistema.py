@@ -68,6 +68,7 @@ class TelaSistema:
             [sg.Button('Cadastrar Endereço', size=(30, 3))],
             [sg.Button('Deletar Endereço', size=(30, 3))],
             [sg.Button('Listar Endereço', size=(30, 3))],
+            [sg.Button('Validar Documentos', size=(30, 3))],
         ]
 
         window = sg.Window('Menu Empresa', layout=layout,)
@@ -97,6 +98,9 @@ class TelaSistema:
         elif event == 'Listar Endereço':
             window.close()
             return 7
+        elif event == 'Validar Documentos':
+            window.close()
+            return 8
 
     def logado_com_sucesso(self):
         layout = [
@@ -114,3 +118,25 @@ class TelaSistema:
                 window.close()
                 break
 
+    def mostrar_opcoes_documentos(self):
+        layout = [
+            [sg.Button('Validar cpf', size=(30, 3))],
+            [sg.Button('Validar rg', size=(30, 3))],
+            [sg.Button('Validar titulo', size=(30, 3))],
+        ]
+
+        window = sg.Window('Menu Empresa', layout=layout,)
+
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            return 0
+        elif event == 'Validar cpf':
+            window.close()
+            return 1
+        elif event == 'Validar rg':
+            window.close()
+            return 2
+        elif event == 'Validar titulo':
+            window.close()
+            return 3

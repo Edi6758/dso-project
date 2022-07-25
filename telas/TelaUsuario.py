@@ -9,6 +9,8 @@ class TelaUsuario:
             [sg.Input(key='cpf')],
             [sg.Text('qual o rg?')],
             [sg.Input(key='rg')],
+            [sg.Text('qual o titulo?')],
+            [sg.Input(key='titulo')],
             [sg.Text('qual o email?')],
             [sg.Input(key='email')],
             [sg.Text('qual a senha?')],
@@ -25,11 +27,12 @@ class TelaUsuario:
             elif event == 'Cadastrar':
                 nome = values['nome']
                 cpf = values['cpf']
+                titulo = values['titulo']
                 rg = values['rg']
                 email = values['email']
                 senha = values['senha']
                 window.close()
-                return {'nome': nome, 'cpf': cpf, 'rg': rg, 'email': email, 'senha': senha}
+                return {'nome': nome, 'cpf': cpf, 'rg': rg, 'titulo': titulo, 'email': email, 'senha': senha}
 
     def usuario_duplicado(self):
         print(' esse cpf já foi cadastrado')

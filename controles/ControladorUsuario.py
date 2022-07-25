@@ -1,11 +1,12 @@
 from telas.TelaUsuario import TelaUsuario
 from entidades.Usuario import Usuario
-
+from telas.TelaDocumento import TelaDocumento
 
 class ControladorUsuario:
     def __init__(self):
         self.__tela_usuario = TelaUsuario()
         self.__usuarios = []
+        self.__tela_documento = TelaDocumento()
 
 
     @property
@@ -18,7 +19,7 @@ class ControladorUsuario:
 
     def cadastrar_usuario(self):
         dados_usuario = self.__tela_usuario.cadastrar_usuario()
-        usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'], dados_usuario['rg'], dados_usuario['email'],
+        usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'],dados_usuario['rg'], dados_usuario['titulo'], dados_usuario['email'],
                           dados_usuario['senha'])
 
         if self.__usuarios:
@@ -60,3 +61,36 @@ class ControladorUsuario:
             for i in self.__usuarios:
                 if i.cpf == usuario_a_ser:
                     self.__usuarios.remove(i)
+
+    def validar_cpf(self):
+        arquivo_cpf = self.__tela_documento.validacao_cpf()
+        oi = True
+        if oi is True:
+            for i in self.__usuarios:
+                if i.cpf == arquivo_cpf:
+                    self.__tela_documento.validado()
+                    return True
+            else:
+                self.__tela_documento.nao_validado()
+
+    def validar_rg(self):
+        arquivo_rg = self.__tela_documento.validacao_rg()
+        oi = True
+        if oi is True:
+            for i in self.__usuarios:
+                if i.rg == arquivo_rg:
+                    self.__tela_documento.validado()
+                    return True
+            else:
+                self.__tela_documento.nao_validado()
+
+    def validar_titulo(self):
+        arquivo_titulo = self.__tela_documento.validacao_titulo()
+        oi = True
+        if oi is True:
+            for i in self.__usuarios:
+                if i.titulo == arquivo_titulo:
+                    self.__tela_documento.validado()
+                    return True
+            else:
+                self.__tela_documento.nao_validado()
