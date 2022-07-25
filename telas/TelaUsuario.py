@@ -131,3 +131,20 @@ class TelaUsuario:
         layout = [
             sg.popup_scrolled(*lista, title='lista usuarios')
         ]
+
+    def acessar_usuario(self):
+        layout = [
+            [sg.Text('Qual o cpf do usuario a acessar?')],
+            [sg.Input(key='cpf_acessar')],
+            [sg.Button('ok')]
+        ]
+
+        window = sg.Window('usuario a acessar', layout=layout)
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            window.close()
+        elif event == 'ok':
+            cpf = values['cpf_acessar']
+            window.close()
+            return cpf

@@ -7,6 +7,7 @@ class ControladorUsuario:
         self.__tela_usuario = TelaUsuario()
         self.__usuarios = []
         self.__tela_documento = TelaDocumento()
+        self.__usuario_atual = None
 
 
     @property
@@ -63,34 +64,40 @@ class ControladorUsuario:
                     self.__usuarios.remove(i)
 
     def validar_cpf(self):
-        arquivo_cpf = self.__tela_documento.validacao_cpf()
-        oi = True
-        if oi is True:
-            for i in self.__usuarios:
-                if i.cpf == arquivo_cpf:
+        usuario_a_acessar = self.__tela_usuario.acessar_usuario()
+        for i in self.__usuarios:
+            if i.cpf == usuario_a_acessar:
+                self.__usuario_atual = i
+                arquivo_cpf = self.__tela_documento.validacao_cpf()
+                if self.__usuario_atual.cpf == arquivo_cpf:
                     self.__tela_documento.validado()
-                    return True
-            else:
-                self.__tela_documento.nao_validado()
+                else:
+                    self.__tela_documento.nao_validado()
+        else:
+            pass
 
     def validar_rg(self):
-        arquivo_rg = self.__tela_documento.validacao_rg()
-        oi = True
-        if oi is True:
-            for i in self.__usuarios:
-                if i.rg == arquivo_rg:
+        usuario_a_acessar = self.__tela_usuario.acessar_usuario()
+        for i in self.__usuarios:
+            if i.cpf == usuario_a_acessar:
+                self.__usuario_atual = i
+                arquivo_rg = self.__tela_documento.validacao_rg()
+                if self.__usuario_atual.rg == arquivo_rg:
                     self.__tela_documento.validado()
-                    return True
-            else:
-                self.__tela_documento.nao_validado()
+                else:
+                    self.__tela_documento.nao_validado()
+        else:
+            pass
 
     def validar_titulo(self):
-        arquivo_titulo = self.__tela_documento.validacao_titulo()
-        oi = True
-        if oi is True:
-            for i in self.__usuarios:
-                if i.titulo == arquivo_titulo:
+        usuario_a_acessar = self.__tela_usuario.acessar_usuario()
+        for i in self.__usuarios:
+            if i.cpf == usuario_a_acessar:
+                self.__usuario_atual = i
+                arquivo_titulo = self.__tela_documento.validacao_titulo()
+                if self.__usuario_atual.titulo == arquivo_titulo:
                     self.__tela_documento.validado()
-                    return True
-            else:
-                self.__tela_documento.nao_validado()
+                else:
+                    self.__tela_documento.nao_validado()
+        else:
+            pass
