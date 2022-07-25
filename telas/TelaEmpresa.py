@@ -34,9 +34,6 @@ class TelaEmpresa:
                     window.close()
                     break
 
-    def menu_nomes_empresas(self):
-        print('---------Menu das Empresas Cadastradas---------')
-
     def acessar_empresa(self, lista: list):
         lista_empresa = lista
         layout = [

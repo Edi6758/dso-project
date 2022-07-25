@@ -27,13 +27,11 @@ class ControladorEmpresa:
                     self.__empresas_cadastradas.append(empresa)
             else:
                 self.__empresas_cadastradas.append(empresa)
-            print(self.__empresas_cadastradas)
         except TypeError:
             self.__tela_exception.EmpresaVazia()
             pass
 
     def listar_nomes_empresas_cadastradas(self):
-        self.__tela_empresa.menu_nomes_empresas()
         lista = []
         for i in self.__empresas_cadastradas:
             lista.append(i.nome)

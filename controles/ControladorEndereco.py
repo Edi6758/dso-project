@@ -22,12 +22,8 @@ class ControladorEndereco:
                         raise EnderecoJahCadastrado
                 else:
                     self.__enderecos.append(endereco)
-                    print('endereco cadastrado com sucesso1')
-                    print(self.__enderecos)
             else:
                 self.__enderecos.append(endereco)
-                print('endereco cadastrado com sucesso2')
-                print(self.__enderecos)
         except TypeError:
             self.__tela_exception.EnderecoVazio()
             pass
