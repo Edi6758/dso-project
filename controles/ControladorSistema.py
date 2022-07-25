@@ -2,6 +2,8 @@ from telas.TelaSistema import TelaSistema
 from controles.ControladorEmpresa import ControladorEmpresa
 from controles.ControladorUsuario import ControladorUsuario
 from controles.ControladorEndereco import ControladorEndereco
+from controles.ControladorDocumento import ControladorDocumento
+
 
 
 class ControladorSistema:
@@ -11,6 +13,7 @@ class ControladorSistema:
         self.__controlador_empresa = ControladorEmpresa()
         self.__controlador_usuario = ControladorUsuario()
         self.__controlador_endereco = ControladorEndereco()
+        self.__controlador_documento = ControladorDocumento()
 
     def inicia_sistema(self):
         self.abre_tela()
@@ -46,6 +49,17 @@ class ControladorSistema:
                                     self.__controlador_endereco.excluir_endereco()
                                 elif opcao_empresa_acessada == 7:
                                     self.__controlador_endereco.listar_enderecos()
+                                elif opcao_empresa_acessada == 8:
+                                    while True:
+                                        opcao_documento = self.__tela_sistema.mostrar_opcoes_documentos()
+                                        if opcao_documento == 1:
+                                            self.__controlador_usuario.validar_cpf()
+                                        elif opcao_documento == 2:
+                                            self.__controlador_usuario.validar_rg()
+                                        elif opcao_documento == 3:
+                                            self.__controlador_usuario.validar_titulo()
+                                        elif opcao_documento == 0:
+                                            break
                                 elif opcao_empresa_acessada == 0:
                                     break
                     elif opcao == 3:

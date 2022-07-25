@@ -1,11 +1,13 @@
 from telas.TelaUsuario import TelaUsuario
 from entidades.Usuario import Usuario
-
+from telas.TelaDocumento import TelaDocumento
 
 class ControladorUsuario:
     def __init__(self):
         self.__tela_usuario = TelaUsuario()
         self.__usuarios = []
+        self.__tela_documento = TelaDocumento()
+        self.__usuario_atual = None
 
 
     @property
@@ -18,7 +20,7 @@ class ControladorUsuario:
 
     def cadastrar_usuario(self):
         dados_usuario = self.__tela_usuario.cadastrar_usuario()
-        usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'], dados_usuario['rg'], dados_usuario['email'],
+        usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'],dados_usuario['rg'], dados_usuario['titulo'], dados_usuario['email'],
                           dados_usuario['senha'])
 
         if self.__usuarios:
@@ -60,3 +62,42 @@ class ControladorUsuario:
             for i in self.__usuarios:
                 if i.cpf == usuario_a_ser:
                     self.__usuarios.remove(i)
+
+    def validar_cpf(self):
+        usuario_a_acessar = self.__tela_usuario.acessar_usuario()
+        for i in self.__usuarios:
+            if i.cpf == usuario_a_acessar:
+                self.__usuario_atual = i
+                arquivo_cpf = self.__tela_documento.validacao_cpf()
+                if self.__usuario_atual.cpf == arquivo_cpf:
+                    self.__tela_documento.validado()
+                else:
+                    self.__tela_documento.nao_validado()
+        else:
+            pass
+
+    def validar_rg(self):
+        usuario_a_acessar = self.__tela_usuario.acessar_usuario()
+        for i in self.__usuarios:
+            if i.cpf == usuario_a_acessar:
+                self.__usuario_atual = i
+                arquivo_rg = self.__tela_documento.validacao_rg()
+                if self.__usuario_atual.rg == arquivo_rg:
+                    self.__tela_documento.validado()
+                else:
+                    self.__tela_documento.nao_validado()
+        else:
+            pass
+
+    def validar_titulo(self):
+        usuario_a_acessar = self.__tela_usuario.acessar_usuario()
+        for i in self.__usuarios:
+            if i.cpf == usuario_a_acessar:
+                self.__usuario_atual = i
+                arquivo_titulo = self.__tela_documento.validacao_titulo()
+                if self.__usuario_atual.titulo == arquivo_titulo:
+                    self.__tela_documento.validado()
+                else:
+                    self.__tela_documento.nao_validado()
+        else:
+            pass
