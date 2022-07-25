@@ -24,7 +24,6 @@ class ControladorEmpresa:
         else:
             self.__empresas_cadastradas.append(empresa)
         print(self.__empresas_cadastradas)
-        self.__empresaDao.add(empresa.cnpj, empresa=empresa)
 
     def listar_nomes_empresas_cadastradas(self):
         self.__tela_empresa.menu_nomes_empresas()
