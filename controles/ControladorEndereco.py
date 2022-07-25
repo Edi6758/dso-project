@@ -1,29 +1,38 @@
 from telas.TelaEndereco import TelaEndereco
 from entidades.Endereco import Endereco
+from telas.TelaExcessões import TelaExcessoes
+from excessoes.EnderecoJahCadastradoException import EnderecoJahCadastrado
+
 
 class ControladorEndereco:
 
     def __init__(self):
         self.__enderecos = []
         self.__tela_endereco = TelaEndereco()
+        self.__tela_exception = TelaExcessoes()
 
     def cadastrar_endereco(self):
         dados_endereco = self.__tela_endereco.mostra_cadastro_endereco()
-        endereco = Endereco(dados_endereco['estado'], dados_endereco['cidade'], dados_endereco['bairro'],
-                            dados_endereco['rua'], dados_endereco['numero'], dados_endereco['cep'])
-        if self.__enderecos:
-            for i in self.__enderecos:
-                if i.cep == endereco.cep:
-                    print('cep já cadastrado')
-                    break
+        try:
+            endereco = Endereco(dados_endereco['estado'], dados_endereco['cidade'], dados_endereco['bairro'],
+                                dados_endereco['rua'], dados_endereco['numero'], dados_endereco['cep'])
+            if self.__enderecos:
+                for i in self.__enderecos:
+                    if i.cep == endereco.cep:
+                        raise EnderecoJahCadastrado
+                else:
+                    self.__enderecos.append(endereco)
+                    print('endereco cadastrado com sucesso1')
+                    print(self.__enderecos)
             else:
                 self.__enderecos.append(endereco)
-                print('endereco cadastrado com sucesso1')
+                print('endereco cadastrado com sucesso2')
                 print(self.__enderecos)
-        else:
-            self.__enderecos.append(endereco)
-            print('endereco cadastrado com sucesso2')
-            print(self.__enderecos)
+        except TypeError:
+            self.__tela_exception.EnderecoVazio()
+            pass
+        except EnderecoJahCadastrado:
+            self.__tela_exception.EnderecoJahCadastrado()
 
     def listar_enderecos(self):
         lista_cpfs_cadastrados = []
@@ -39,4 +48,4 @@ class ControladorEndereco:
             if i.cep == endereco_a_excluir:
                 self.__enderecos.remove(i)
         else:
-            print('esse cep não está cadastrado')
+            self.__tela_exception.EnderecoNaoExiste()

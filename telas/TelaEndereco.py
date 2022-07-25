@@ -25,15 +25,20 @@ class TelaEndereco:
             while True:
                 if event == sg.WINDOW_CLOSED:
                     window.close()
+                    break
                 elif event == 'Cadastrar':
-                    estado = values['estado']
-                    cidade = values['cidade']
-                    bairro = values['bairro']
-                    rua = values['rua']
-                    numero = values['numero']
-                    cep = values['cep']
-                    window.close()
-                    return {'estado': estado, 'cidade': cidade, 'bairro': bairro, 'rua': rua, 'numero': numero, 'cep': cep}
+                    if values['estado'] != '' and values['cidade'] != '' and values['bairro'] != '' and values['rua'] != '' and values['numero'] != '' and values['cep'] != '':
+                        estado = values['estado']
+                        cidade = values['cidade']
+                        bairro = values['bairro']
+                        rua = values['rua']
+                        numero = values['numero']
+                        cep = values['cep']
+                        window.close()
+                        return {'estado': estado, 'cidade': cidade, 'bairro': bairro, 'rua': rua, 'numero': numero, 'cep': cep}
+                    else:
+                        window.close()
+                        break
 
     def endereco_a_ser_editado(self):
         print('Menu de alteração de endereço')

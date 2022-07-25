@@ -22,12 +22,17 @@ class TelaEmpresa:
         event, values = window.read()
         while True:
             if event == sg.WINDOW_CLOSED:
+                window.close()
                 break
             elif event == 'Cadastrar':
-                nome = values['nome']
-                cnpj = values['cnpj']
-                window.close()
-                return {'nome': nome, 'cnpj': cnpj}
+                if values['nome'] != '' and values['cnpj'] != '':
+                    nome = values['nome']
+                    cnpj = values['cnpj']
+                    window.close()
+                    return {'nome': nome, 'cnpj': cnpj}
+                else:
+                    window.close()
+                    break
 
     def menu_nomes_empresas(self):
         print('---------Menu das Empresas Cadastradas---------')
@@ -105,4 +110,20 @@ class TelaEmpresa:
                 break
 
     def empresa_duplicada(self):
-        print('essa empresa já foi cadastrada')
+            layout = [
+                [sg.Text('Empresa já cadastrada')],
+                [sg.Button('OK')],
+            ]
+
+            window = sg.Window('Empresa já cadastrada', layout=layout)
+            event, values = window.read()
+
+            while True:
+                if event == sg.WINDOW_CLOSED:
+                    window.close()
+                    break
+                elif event == 'OK':
+                    window.close()
+                    break
+
+

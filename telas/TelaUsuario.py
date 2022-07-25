@@ -24,16 +24,20 @@ class TelaUsuario:
         while True:
             if event == sg.WINDOW_CLOSED:
                 window.close()
+                break
             elif event == 'Cadastrar':
-                nome = values['nome']
-                cpf = values['cpf']
-                titulo = values['titulo']
-                rg = values['rg']
-                email = values['email']
-                senha = values['senha']
-                window.close()
-                return {'nome': nome, 'cpf': cpf, 'rg': rg, 'titulo': titulo, 'email': email, 'senha': senha}
-
+                if values['nome'] != '' and values['cpf'] != '' and values['titulo'] != '' and values['rg'] != '' and values['email'] != '' and values['senha'] != '':
+                    nome = values['nome']
+                    cpf = values['cpf']
+                    titulo = values['titulo']
+                    rg = values['rg']
+                    email = values['email']
+                    senha = values['senha']
+                    window.close()
+                    return {'nome': nome, 'cpf': cpf, 'rg': rg, 'titulo': titulo, 'email': email, 'senha': senha}
+                else:
+                    window.close()
+                    break
     def usuario_duplicado(self):
         print(' esse cpf já foi cadastrado')
 
@@ -124,6 +128,7 @@ class TelaUsuario:
             window.close()
         elif event == 'editar':
             dados = values['dado']
+            window.close()
             return dados
 
     def listar_usuarios(self, lista: []):

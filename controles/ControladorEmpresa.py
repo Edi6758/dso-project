@@ -1,6 +1,8 @@
 from telas.TelaEmpresa import TelaEmpresa
 from entidades.Empresa import Empresa
 from DAO.EmpresaDAO import EmpresaDAO
+from excessoes.EmpresaNaoEncontradaException import EmpresaNaoEncontrada
+from telas.TelaExcessões import TelaExcessoes
 
 
 class ControladorEmpresa:
@@ -10,20 +12,25 @@ class ControladorEmpresa:
         self.__tela_empresa = TelaEmpresa()
         self.__empresa_acessada = None
         self.__empresaDao = EmpresaDAO()
+        self.__tela_exception = TelaExcessoes()
 
     def cadastrar_empresa(self):
         dados_empresa = self.__tela_empresa.mostra_cadastro_empresa()
-        empresa = Empresa(dados_empresa['nome'], dados_empresa['cnpj'])
-        if self.__empresas_cadastradas:
-            for i in self.__empresas_cadastradas:
-                if i.cnpj == empresa.cnpj:
-                    self.__tela_empresa.empresa_duplicada()
-                    break
+        try:
+            empresa = Empresa(dados_empresa['nome'], dados_empresa['cnpj'])
+            if self.__empresas_cadastradas:
+                for i in self.__empresas_cadastradas:
+                    if i.cnpj == empresa.cnpj:
+                        self.__tela_empresa.empresa_duplicada()
+                        break
+                else:
+                    self.__empresas_cadastradas.append(empresa)
             else:
                 self.__empresas_cadastradas.append(empresa)
-        else:
-            self.__empresas_cadastradas.append(empresa)
-        print(self.__empresas_cadastradas)
+            print(self.__empresas_cadastradas)
+        except TypeError:
+            self.__tela_exception.EmpresaVazia()
+            pass
 
     def listar_nomes_empresas_cadastradas(self):
         self.__tela_empresa.menu_nomes_empresas()
@@ -36,15 +43,18 @@ class ControladorEmpresa:
         empresa_a_ser_acessada = self.__tela_empresa.acessar_empresa(lista=self.listar_nomes_empresas_cadastradas())
         contador = 0
 
-        if self.__empresas_cadastradas:
-            for i in self.__empresas_cadastradas:
-                if i.nome == empresa_a_ser_acessada:
-                    self.__tela_empresa.empresa_acessada_com_sucesso()
-                    contador += 1
-                    self.__empresa_acessada = i
-                    return i
-            else:
-                return False
+        try:
+            if self.__empresas_cadastradas:
+                for i in self.__empresas_cadastradas:
+                    if i.nome == empresa_a_ser_acessada:
+                        self.__tela_empresa.empresa_acessada_com_sucesso()
+                        contador += 1
+                        self.__empresa_acessada = i
+                        return i
+                else:
+                    raise EmpresaNaoEncontrada
+        except EmpresaNaoEncontrada:
+            self.__tela_exception.EmpresaNaoEncontrada()
 
 
     def excluir_empresa(self):

@@ -1,6 +1,9 @@
 from telas.TelaUsuario import TelaUsuario
 from entidades.Usuario import Usuario
 from telas.TelaDocumento import TelaDocumento
+from telas.TelaExcessões import TelaExcessoes
+from excessoes.UsuarioJahCadastradoException import UsuarioJahCadastrado
+
 
 class ControladorUsuario:
     def __init__(self):
@@ -8,6 +11,7 @@ class ControladorUsuario:
         self.__usuarios = []
         self.__tela_documento = TelaDocumento()
         self.__usuario_atual = None
+        self.__tela_exception = TelaExcessoes()
 
 
     @property
@@ -20,17 +24,23 @@ class ControladorUsuario:
 
     def cadastrar_usuario(self):
         dados_usuario = self.__tela_usuario.cadastrar_usuario()
-        usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'],dados_usuario['rg'], dados_usuario['titulo'], dados_usuario['email'],
-                          dados_usuario['senha'])
+        try:
+            usuario = Usuario(dados_usuario['nome'], dados_usuario['cpf'], dados_usuario['rg'], dados_usuario['titulo'], dados_usuario['email'],
+                              dados_usuario['senha'])
 
-        if self.__usuarios:
-            for i in self.__usuarios:
-                if i.cpf == usuario.cpf:
-                    print('cpf cadastrado')
+            if self.__usuarios:
+                for i in self.__usuarios:
+                    if i.cpf == usuario.cpf:
+                        raise UsuarioJahCadastrado
+                else:
+                    self.__usuarios.append(usuario)
             else:
                 self.__usuarios.append(usuario)
-        else:
-            self.__usuarios.append(usuario)
+        except TypeError:
+            self.__tela_exception.UsuarioVazio()
+            pass
+        except UsuarioJahCadastrado:
+            self.__tela_exception.UsuarioJahCadastrado()
 
     def listar_usuario(self):
         lista_usuarios = []
@@ -55,6 +65,8 @@ class ControladorUsuario:
                         i.email = self.__tela_usuario.recebe_novo_dado()
                     elif opcao == 5:
                         i.senha = self.__tela_usuario.recebe_novo_dado()
+            else:
+                self.__tela_exception.UsuarioNaoExiste()
 
     def excluir_usuario(self):
         usuario_a_ser = self.__tela_usuario.qual_o_usuario_a_excluir()
@@ -62,6 +74,8 @@ class ControladorUsuario:
             for i in self.__usuarios:
                 if i.cpf == usuario_a_ser:
                     self.__usuarios.remove(i)
+            else:
+                self.__tela_exception.UsuarioNaoExiste()
 
     def validar_cpf(self):
         usuario_a_acessar = self.__tela_usuario.acessar_usuario()
