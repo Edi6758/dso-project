@@ -68,7 +68,6 @@ class TelaSistema:
             [sg.Button('Cadastrar Endereço', size=(30, 3))],
             [sg.Button('Deletar Endereço', size=(30, 3))],
             [sg.Button('Listar Endereço', size=(30, 3))],
-            [sg.Button('Validar Documentos', size=(30, 3))],
         ]
 
         window = sg.Window('Menu Empresa', layout=layout,)

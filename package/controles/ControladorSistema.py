@@ -13,7 +13,6 @@ class ControladorSistema:
         self.__controlador_empresa = ControladorEmpresa()
         self.__controlador_usuario = ControladorUsuario()
         self.__controlador_endereco = ControladorEndereco()
-        self.__documento_service = DocumentoService()
 
     def inicia_sistema(self):
         self.abre_tela()
@@ -32,13 +31,12 @@ class ControladorSistema:
                     elif opcao == 2:
                         empresa_acessada = self.__controlador_empresa.acessar_empresa()
                         if empresa_acessada:
-                            self.__controlador_usuario.usuarios = empresa_acessada.usuarios
                             while True:
                                 opcao_empresa_acessada = self.__tela_sistema.mostra_opcoes_tela_empresa_acessada()
                                 if opcao_empresa_acessada == 1:
                                     self.__controlador_usuario.cadastrar_usuario()
                                 elif opcao_empresa_acessada == 2:
-                                    self.__controlador_usuario.listar_usuario()
+                                    self.__controlador_usuario.listar_usuarios()
                                 elif opcao_empresa_acessada == 3:
                                     self.__controlador_usuario.editar_usuario()
                                 elif opcao_empresa_acessada == 4:
@@ -49,17 +47,6 @@ class ControladorSistema:
                                     self.__controlador_endereco.excluir_endereco()
                                 elif opcao_empresa_acessada == 7:
                                     self.__controlador_endereco.listar_enderecos()
-                                elif opcao_empresa_acessada == 8:
-                                    while True:
-                                        opcao_documento = self.__tela_sistema.mostrar_opcoes_documentos()
-                                        if opcao_documento == 1:
-                                            self.__controlador_usuario.validar_cpf()
-                                        elif opcao_documento == 2:
-                                            self.__controlador_usuario.validar_rg()
-                                        elif opcao_documento == 3:
-                                            self.__controlador_usuario.validar_titulo()
-                                        elif opcao_documento == 0:
-                                            break
                                 elif opcao_empresa_acessada == 0:
                                     break
                     elif opcao == 3:

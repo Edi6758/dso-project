@@ -3,7 +3,7 @@ import cv2
 import pytesseract
 import re
 
-from Config import Config
+from package.Config import Config
 
 
 class ValidacaoService:

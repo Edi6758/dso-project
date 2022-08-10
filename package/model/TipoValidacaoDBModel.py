@@ -6,4 +6,4 @@ class TipoValidacaoDBModel(sqlalchemy_base):
     __tablename__ = "tipo_validacao"
 
     id = Column(Integer, primary_key=True)
-    nome = Column(String(100), unique=True)
+    nome = Column(String(100), unique=True, nullable=False)
