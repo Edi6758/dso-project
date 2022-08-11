@@ -6,7 +6,6 @@ class ValidacaoDBModel(sqlalchemy_base):
 
     __tablename__ = "validacao"
 
-    id = Column(Integer)
     usuario_id = Column(
             Integer,
             ForeignKey('usuario.id', ondelete='CASCADE'),

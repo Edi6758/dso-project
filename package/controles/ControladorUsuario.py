@@ -18,19 +18,21 @@ class ControladorUsuario:
         dados_usuario: dict | None = self.__tela_usuario.cadastrar_usuario()
         try:
             model = self.__usuarioService.convertDictToEntity(dados_usuario)
+            validacoes = self.__usuarioService.getValidacoesFromUsuarioDto(dados_usuario)
             usuarios = self.__usuarioService.getUsuarios()
 
-            if usuarios:
-                for usuario in usuarios:
-                    if usuario.cpf == model.cpf:
-                        raise UsuarioJahCadastrado
-                else:
-                    self.__usuarioService.persist(model)
-            else:
-                self.__usuarioService.persist(model)
-        except TypeError:
-            self.__tela_exception.UsuarioVazio()
-            pass
+            for usuario in usuarios:
+                if usuario.cpf == model.cpf:
+                    raise UsuarioJahCadastrado
+
+            self.__usuarioService.persist(model)
+
+            usuario_id = self.__usuarioService.getUsuarioByCpf(model.cpf).id
+            self.__usuarioService.saveValidacoesByUsuarioId(usuario_id, validacoes)
+
+        # except TypeError:
+        #     self.__tela_exception.UsuarioVazio()
+        #     pass
         except UsuarioJahCadastrado:
             self.__tela_exception.UsuarioJahCadastrado()
 

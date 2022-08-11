@@ -8,6 +8,7 @@ class Usuario:
             titulo: str,
             email: str,
             senha: str,
+            id: int | None = None,
             validacao_contrato: bool = False,
             validacao_matricula: bool = False,
             validacao_procuracao: bool = False,
@@ -16,6 +17,7 @@ class Usuario:
             validacao_cert_cnd: bool = False,
             validacao_cert_casamento: bool = False):
 
+        self.__id = id
         self.__nome = nome
         self.__cpf = cpf
         self.__rg = rg
@@ -29,6 +31,14 @@ class Usuario:
         self.__validacao_cert_civil = validacao_cert_civil 
         self.__validacao_cert_cnd = validacao_cert_cnd 
         self.__validacao_cert_casamento = validacao_cert_casamento 
+
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, id):
+        self.__id = id
 
     @property
     def nome(self):

@@ -11,3 +11,7 @@ sqlalchemy_base = declarative_base()
 Session = sessionmaker(bind=sqlalchemy_engine)
 sqlalchemy_session = Session()
 
+from package.model.TipoValidacaoDBModel import TipoValidacaoDBModel
+from package.model.UsuarioDBModel import UsuarioDBModel
+from package.model.ValidacaoDBModel import ValidacaoDBModel
+

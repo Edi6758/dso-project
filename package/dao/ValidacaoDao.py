@@ -1,9 +1,9 @@
 from package import sqlalchemy_session
-from package.model.UsuarioDBModel import UsuarioDBModel
+from package.model.ValidacaoDBModel import ValidacaoDBModel
 
 
-class UsuarioDao:
-    __model = UsuarioDBModel
+class ValidacaoDao:
+    __model = ValidacaoDBModel
     __session = sqlalchemy_session
 
     def create(self, model: __model):

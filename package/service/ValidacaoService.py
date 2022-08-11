@@ -4,9 +4,20 @@ import pytesseract
 import re
 
 from package.Config import Config
+from package.dao.ValidacaoDao import ValidacaoDao
+from package.model.ValidacaoDBModel import ValidacaoDBModel
 
 
 class ValidacaoService:
+    def __init__(self):
+        self.__validacaoDao = ValidacaoDao()
+
+    def persist(self, model):
+        self.__validacaoDao.create(model)
+
+    def convertDictToModel(self, dto: dict) -> ValidacaoDBModel:
+        return ValidacaoDBModel(usuario_id=dto["usuario_id"], tipo_validacao_id=dto["tipo_validacao_id"])
+
     def read_image_to_text(self, path: str) -> str:
         if Config.TESSERACT_CMD: pytesseract.pytesseract.tesseract_cmd = Config.TESSERACT_CMD 
         image = cv2.imread(path)

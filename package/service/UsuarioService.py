@@ -1,7 +1,9 @@
 from sqlalchemy.orm import Query
 from package.dao.UsuarioDao import UsuarioDao
 from package.entidades.Usuario import Usuario
+from package.entidades.ValidacaoDocumentoEnum import ValidacaoDocumentoEnum
 from package.model.UsuarioDBModel import UsuarioDBModel
+from package.query.UsuarioQuery import UsuarioQuery
 from package.service.DocumentoService import DocumentoService
 from package.service.ValidacaoService import ValidacaoService
 
@@ -10,13 +12,14 @@ class UsuarioService:
     def __init__(self):
         self.__documento_service = DocumentoService()
         self.__validacao_service = ValidacaoService()
+        self.__usuarioQuery = UsuarioQuery()
         self.__usuarioDao = UsuarioDao()
 
     def getUsuarioById(self, id) -> Usuario:
         return self.convertModelToEntity(self.__usuarioDao.read(id))
 
     def getUsuarioByCpf(self, cpf) -> Usuario:
-        return self.convertModelToEntity(self.__usuarioDao.read().filter_by(cpf = cpf))
+        return self.convertModelToEntity(self.__usuarioQuery.getUsuarioByCpf(cpf))
 
     def deleteUsuarioById(self):
         self.__usuarioDao.delete(id)
@@ -29,70 +32,42 @@ class UsuarioService:
         model = self.convertEntityToModel(entity)
         self.__usuarioDao.create(model)
 
+    def getValidacoesFromUsuarioDto(self, dto: dict):
+        documentos_validados = []
+        validacoes = {
+            'contrato': ValidacaoDocumentoEnum.CONTRATO,
+            'matricula': ValidacaoDocumentoEnum.MATRICULA,
+            'procuracao': ValidacaoDocumentoEnum.PROCURACAO,
+            'requerimento': ValidacaoDocumentoEnum.REQUERIMENTO,
+            'cert_civil': ValidacaoDocumentoEnum.CERT_CIVIL,
+            'cert_cnd': ValidacaoDocumentoEnum.CERT_CND,
+            'cert_casamento': ValidacaoDocumentoEnum.CERT_CASAMENTO
+        }
+        for key in dto.keys():
+            if key in validacoes.keys() and dto[key] == True:
+                documentos_validados.append(validacoes[key])
+
+        return documentos_validados
+
+    def getValidacoesByUsuarioId(self, id):
+        pass
+
+    def saveValidacoesByUsuarioId(self, id, validacoes):
+        for validacao in validacoes:
+            self.__validacao_service.persist(
+                self.__validacao_service.convertDictToModel({
+                    'usuario_id': id,
+                    'tipo_validacao_id': validacao.value
+                }))
+
     def convertDictToEntity(self, dto: dict) -> Usuario:
-            if dto['contrato']:
-                val_contrato = self.__documento_service.validar_contrato(
-                    document=self.__validacao_service.read_image_to_text(dto['contrato']),
-                    nome=dto['nome'],
-                    cpf=dto['cpf'],
-                    rg=dto['rg'],
-                    num_matricula=dto['num_matricula'])
-            else: val_contrato = False
-
-            if dto['matricula']:
-                val_matricula = self.__documento_service.validar_matricula(
-                    document=self.__validacao_service.read_image_to_text(dto['matricula']),
-                    nome=dto['nome'])
-            else: val_matricula = False
-
-            if dto['procuracao']:
-                val_procuracao = self.__documento_service.validar_procuracao(
-                    document=self.__validacao_service.read_image_to_text(dto['procuracao']),
-                    nome=dto['nome'])
-            else: val_procuracao = False
-
-            if dto['requerimento']:
-                val_requerimento = self.__documento_service.validar_requerimento(
-                    document=self.__validacao_service.read_image_to_text(dto['requerimento']),
-                    nome=dto['nome'])
-            else: val_requerimento = False
-
-            if dto['cert_civil']:
-                val_cert_civil = self.__documento_service.validar_cert_criminal(
-                    document=self.__validacao_service.read_image_to_text(dto['cert_civil']),
-                    nome=dto['nome'],
-                    cpf=dto['cpf'])
-            else: val_cert_civil = False
-
-            if dto['cert_cnd']:
-                val_cert_cnd = self.__documento_service.validar_cert_cnd(
-                    document=self.__validacao_service.read_image_to_text(dto['cert_cnd']),
-                    nome=dto['nome'],
-                    cpf=dto['cpf'])
-            else: val_cert_cnd = False
-
-            if dto['cert_casamento']:
-                val_cert_casamento = self.__documento_service.validar_cert_casamento(
-                    document=self.__validacao_service.read_image_to_text(dto['cert_casamento']),
-                    nome=dto['nome'],
-                    cpf=dto['cpf'])
-            else: val_cert_casamento = False
-
             return Usuario(
                 dto['nome'],
                 dto['cpf'],
                 dto['rg'],
                 dto['titulo'],
                 dto['email'],
-                dto['senha'],
-                val_contrato,
-                val_matricula,
-                val_procuracao,
-                val_requerimento,
-                val_cert_civil,
-                val_cert_cnd,
-                val_cert_casamento)
-
+                dto['senha'])
 
     def convertEntityToModel(self, entity: Usuario) -> UsuarioDBModel:
         return UsuarioDBModel(nome=entity.nome,
@@ -103,7 +78,9 @@ class UsuarioService:
                               senha=entity.senha)
 
     def convertModelToEntity(self, model) -> Usuario:
-        return Usuario(nome=model.nome,
+        return Usuario(
+                id=model.id,
+                nome=model.nome,
                 cpf=model.cpf,
                 rg=model.rg,
                 email=model.email,
