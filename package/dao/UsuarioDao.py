@@ -21,6 +21,6 @@ class UsuarioDao:
         self.__session.commit()
 
     def delete(self, id):
-        self.__session.query(self.__model).get(id).delete()
+        self.__session.delete(self.__session.query(self.__model).get(id))
         self.__session.commit()
 

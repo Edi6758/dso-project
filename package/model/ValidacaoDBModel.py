@@ -1,6 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from package import sqlalchemy_base
+from package.model.TipoValidacaoDBModel import TipoValidacaoDBModel
 
 class ValidacaoDBModel(sqlalchemy_base):
 
@@ -15,5 +16,4 @@ class ValidacaoDBModel(sqlalchemy_base):
             ForeignKey('tipo_validacao.id'),
             primary_key=True)
 
-    usuario = relationship('UsuarioDBModel', backref='usuario')
-    tipo_validacao = relationship('TipoValidacaoDBModel', backref='tipo_validacao')
+    tipo_validacao = relationship(TipoValidacaoDBModel)

@@ -1,5 +1,8 @@
 
 
+from typing import List
+
+
 class Usuario:
     def __init__(self,
             nome: str,
@@ -9,13 +12,7 @@ class Usuario:
             email: str,
             senha: str,
             id: int | None = None,
-            validacao_contrato: bool = False,
-            validacao_matricula: bool = False,
-            validacao_procuracao: bool = False,
-            validacao_requerimento: bool = False,
-            validacao_cert_civil: bool = False,
-            validacao_cert_cnd: bool = False,
-            validacao_cert_casamento: bool = False):
+            validacoes: List | None = None):
 
         self.__id = id
         self.__nome = nome
@@ -24,13 +21,7 @@ class Usuario:
         self.__titulo = titulo
         self.__email = email
         self.__senha = senha
-        self.__validacao_contrato = validacao_contrato
-        self.__validacao_matricula = validacao_matricula 
-        self.__validacao_procuracao = validacao_procuracao 
-        self.__validacao_requerimento = validacao_requerimento 
-        self.__validacao_cert_civil = validacao_cert_civil 
-        self.__validacao_cert_cnd = validacao_cert_cnd 
-        self.__validacao_cert_casamento = validacao_cert_casamento 
+        self.__validacoes = validacoes
 
     @property
     def id(self):
@@ -89,30 +80,9 @@ class Usuario:
         self.__senha = senha
 
     @property
-    def validacao_contrato(self):
-        return self.__validacao_contrato
+    def validacoes(self):
+        return self.__validacoes
 
-    @property
-    def validacao_matricula(self):
-        return self.__validacao_matricula
-
-    @property
-    def validacao_procuracao(self):
-        return self.__validacao_procuracao
-
-    @property
-    def validacao_requerimento(self):
-        return self.__validacao_requerimento
-
-    @property
-    def validacao_cert_civil(self):
-        return self.__validacao_cert_civil
-
-    @property
-    def validacao_cert_cnd(self):
-        return self.__validacao_cert_cnd
-
-    @property
-    def validacao_cert_casamento(self):
-        return self.__validacao_cert_casamento
-
+    @validacoes.setter
+    def validacoes(self, validacoes):
+        self.__validacoes = validacoes

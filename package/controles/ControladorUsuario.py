@@ -38,6 +38,13 @@ class ControladorUsuario:
 
     def listar_usuarios(self):
         usuarios = self.__usuarioService.getUsuarios()
+
+        for usuario in usuarios:
+            validacoes = self.__usuarioService.getValidacoesByUsuarioId(usuario.id)
+            if validacoes:
+                print("Validacoes Usuario " + usuario.nome)
+                print([validacao.tipo_validacao.nome for validacao in validacoes])
+
         nomes = [usuario.nome for usuario in usuarios]
         self.__tela_usuario.listar_usuarios(lista=nomes)
 
@@ -63,9 +70,8 @@ class ControladorUsuario:
 
     def excluir_usuario(self):
         cpf = self.__tela_usuario.qual_o_usuario_a_excluir()
-        usuarios = self.__usuarioService.getUsuarios()
-        for usuario in usuarios:
-            if usuario.cpf == cpf:
-                self.__usuarioService.deleteUsuarioById(usuario.id)
-                return
-        self.__tela_exception.UsuarioNaoExiste()
+        usuario = self.__usuarioService.getUsuarioByCpf(cpf)
+        if usuario:
+            self.__usuarioService.deleteUsuarioById(usuario.id)
+        else:
+            self.__tela_exception.UsuarioNaoExiste()

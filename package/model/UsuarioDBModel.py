@@ -1,6 +1,7 @@
 from sqlalchemy import Column, ForeignKey, String, Integer
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import backref, relationship
 from package import sqlalchemy_base
+from package.model.ValidacaoDBModel import ValidacaoDBModel
 
 class UsuarioDBModel(sqlalchemy_base):
     __tablename__ = "usuario"
@@ -13,10 +14,4 @@ class UsuarioDBModel(sqlalchemy_base):
     email = Column(String(100), unique=True, nullable=False)
     senha = Column(String(100), nullable=False)
 
-    # empresa_id = Column(
-    #         Integer,
-    #         ForeignKey('empresa.id', ondelete='CASCADE'),
-    #         nullable=True)
-
-    # empresa = relationship('EmpresaDBModel', backref='empresa')
-
+    validacoes = relationship(ValidacaoDBModel, backref=backref('usuario', cascade="all,delete"))

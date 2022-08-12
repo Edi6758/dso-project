@@ -1,16 +1,13 @@
-from sqlalchemy.orm import Query
 from package.dao.UsuarioDao import UsuarioDao
 from package.entidades.Usuario import Usuario
 from package.entidades.ValidacaoDocumentoEnum import ValidacaoDocumentoEnum
 from package.model.UsuarioDBModel import UsuarioDBModel
 from package.query.UsuarioQuery import UsuarioQuery
-from package.service.DocumentoService import DocumentoService
 from package.service.ValidacaoService import ValidacaoService
 
 
 class UsuarioService:
     def __init__(self):
-        self.__documento_service = DocumentoService()
         self.__validacao_service = ValidacaoService()
         self.__usuarioQuery = UsuarioQuery()
         self.__usuarioDao = UsuarioDao()
@@ -21,7 +18,7 @@ class UsuarioService:
     def getUsuarioByCpf(self, cpf) -> Usuario:
         return self.convertModelToEntity(self.__usuarioQuery.getUsuarioByCpf(cpf))
 
-    def deleteUsuarioById(self):
+    def deleteUsuarioById(self, id):
         self.__usuarioDao.delete(id)
 
     def getUsuarios(self):
@@ -43,14 +40,16 @@ class UsuarioService:
             'cert_cnd': ValidacaoDocumentoEnum.CERT_CND,
             'cert_casamento': ValidacaoDocumentoEnum.CERT_CASAMENTO
         }
-        for key in dto.keys():
-            if key in validacoes.keys() and dto[key] == True:
+        print(dto)
+        for key, value in dto.items():
+            if key in validacoes.keys() and bool(value):
                 documentos_validados.append(validacoes[key])
 
         return documentos_validados
 
     def getValidacoesByUsuarioId(self, id):
-        pass
+        usuario = self.getUsuarioById(id)
+        return [val for val in usuario.validacoes] if usuario.validacoes else None
 
     def saveValidacoesByUsuarioId(self, id, validacoes):
         for validacao in validacoes:
@@ -85,4 +84,5 @@ class UsuarioService:
                 rg=model.rg,
                 email=model.email,
                 senha=model.senha,
-                titulo=model.titulo)
+                titulo=model.titulo,
+                validacoes=model.validacoes)
