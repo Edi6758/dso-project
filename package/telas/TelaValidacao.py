@@ -1,5 +1,8 @@
+from typing import List
 import PySimpleGUI as sg
 import os
+
+from package.entidades.ValidacaoDocumentoEnum import ValidacaoDocumentoEnum
 
 
 class TelaValidacao:
@@ -71,3 +74,21 @@ class TelaValidacao:
                 window.close()
                 break
 
+    def documentos_validados(self, validacoes: List[ValidacaoDocumentoEnum]):
+        documentos = [[sg.Text(e.name)] for e in validacoes]
+        layout = [
+            [sg.Text('Documentos Validados:')],
+            *documentos,
+            [sg.Button('OK')],
+        ]
+
+        window = sg.Window('Validacao', layout=layout)
+        event, values = window.read()
+
+        while True:
+            if event == sg.WINDOW_CLOSED:
+                window.close()
+                break
+            elif event == 'OK':
+                window.close()
+                break

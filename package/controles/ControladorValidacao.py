@@ -21,3 +21,4 @@ class ControladorValidacao:
                 arquivosValidacao,
                 usuario)
         self.__usuarioService.saveValidacoesByUsuarioId(usuario.id, validacoes)
+        self.__tela.documentos_validados(validacoes)
