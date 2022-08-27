@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 
+
 class TelaUsuario:
     def cadastrar_usuario(self):
         layout = [
@@ -17,48 +18,29 @@ class TelaUsuario:
             [sg.Input(key='email')],
             [sg.Text('qual a senha?')],
             [sg.Input(key='senha')],
-            [sg.Text('Contrato para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='contrato')],
-            [sg.Text('Matricula para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='matricula')],
-            [sg.Text('Procuracao para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='procuracao')],
-            [sg.Text('Requerimento para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='requerimento')],
-            [sg.Text('Cert. Civil/Criminal para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='cert_civil')],
-            [sg.Text('Cert. CND para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='cert_cnd')],
-            [sg.Text('Cert. casamento para validar [Deixar em branco caso não conste]')],
-            [sg.Input(key='cert_casamento')],
             [sg.Button('Cadastrar')]
         ]
         window = sg.Window('cadastro usuario', layout=layout)
-
         event, values = window.read()
-
         while True:
             if event == sg.WINDOW_CLOSED:
                 window.close()
                 break
             elif event == 'Cadastrar':
-                if values['nome'] != '' and values['cpf'] != '' and values['titulo'] != '' and values['rg'] != '' and values['email'] != '' and values['senha'] != '':
+                if values['nome'] != '' and\
+                   values['cpf'] != '' and\
+                   values['titulo'] != '' and\
+                   values['rg'] != '' and\
+                   values['email'] != '' and\
+                   values['senha'] != '' and\
+                   values['num_matricula'] != '':
                     nome = values['nome']
                     cpf = values['cpf']
                     titulo = values['titulo']
                     rg = values['rg']
                     email = values['email']
                     senha = values['senha']
-
-                    num_matricula = values['num_matricula'] if values['num_matricula'] != '' else None
-                    contrato = values['contrato'] if values['contrato'] != '' else None
-                    matricula = values['matricula'] if values['matricula'] != '' else None
-                    procuracao = values['procuracao'] if values['procuracao'] != '' else None
-                    requerimento = values['requerimento'] if values['requerimento'] != '' else None
-                    cert_civil = values['cert_civil'] if values['cert_civil'] != '' else None
-                    cert_cnd = values['cert_cnd'] if values['cert_cnd'] != '' else None
-                    cert_casamento = values['cert_casamento'] if values['cert_casamento'] != '' else None
-
+                    num_matricula = values['num_matricula']
                     window.close()
 
                     return {
@@ -69,13 +51,6 @@ class TelaUsuario:
                         'titulo': titulo,
                         'email': email,
                         'senha': senha,
-                        'contrato': contrato,
-                        'matricula': matricula,
-                        'procuracao': procuracao,
-                        'requerimento': requerimento,
-                        'cert_civil': cert_civil,
-                        'cert_cnd': cert_cnd,
-                        'cert_casamento': cert_casamento
                     }
                 else:
                     window.close()
@@ -174,7 +149,7 @@ class TelaUsuario:
             window.close()
             return dados
 
-    def listar_usuarios(self, lista: []):
+    def listar_usuarios(self, lista):
         lista = lista
         layout = [
             sg.popup_scrolled(*lista, title='lista usuarios')

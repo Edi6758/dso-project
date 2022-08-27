@@ -2,33 +2,6 @@ import PySimpleGUI as sg
 
 
 class TelaSistema:
-    def mostra_opcoes_tela_inicial(self):
-        layout = [
-            [sg.Text(' O que você deseja fazer?')],
-
-            [sg.Button('cadastrar Empresa', size=(30, 3))],
-
-            [sg.Button('acessar Empresa', size=(30, 3))],
-
-            [sg.Button('deletar Empresa', size=(30, 3))],
-
-        ]
-
-        window = sg.Window('Menu Sistema', layout=layout, size=(250, 250))
-
-        event, values = window.read()
-        if event == sg.WINDOW_CLOSED:
-            return 0
-        elif event == 'cadastrar Empresa':
-            window.close()
-            return 1
-        elif event == 'acessar Empresa':
-            window.close()
-            return 2
-        elif event == 'deletar Empresa':
-            window.close()
-            return 3
-
     def tela_login_sistema(self):
         layout = [
             [sg.Text('usuario')],
@@ -58,16 +31,15 @@ class TelaSistema:
                 else:
                     window['mensagem'].update('login ou senha incorretos')
 
-    def mostra_opcoes_tela_empresa_acessada(self):
+    def menu_principal(self) -> int:
         layout = [
             [sg.Text(' O que você deseja fazer?')],
             [sg.Button('Cadastrar Usuario', size=(30, 3))],
             [sg.Button('Listar Usuario', size=(30, 3))],
             [sg.Button('Editar Usuario', size=(30, 3))],
             [sg.Button('Deletar Usuario', size=(30, 3))],
-            [sg.Button('Cadastrar Endereço', size=(30, 3))],
-            [sg.Button('Deletar Endereço', size=(30, 3))],
-            [sg.Button('Listar Endereço', size=(30, 3))],
+            [sg.Button('Validar Documentos', size=(30, 3))],
+            [sg.Button('Sair', size=(30, 3))],
         ]
 
         window = sg.Window('Menu Empresa', layout=layout,)
@@ -88,18 +60,10 @@ class TelaSistema:
         elif event == 'Deletar Usuario':
             window.close()
             return 4
-        elif event == 'Cadastrar Endereço':
-            window.close()
-            return 5
-        elif event == 'Deletar Endereço':
-            window.close()
-            return 6
-        elif event == 'Listar Endereço':
-            window.close()
-            return 7
         elif event == 'Validar Documentos':
             window.close()
-            return 8
+            return 5
+        else: return 0
 
     def logado_com_sucesso(self):
         layout = [

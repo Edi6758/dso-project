@@ -10,6 +10,7 @@ class UsuarioDBModel(sqlalchemy_base):
     nome = Column(String(100), nullable=False)
     cpf = Column(String(11), unique=True, nullable=False)
     rg = Column(String(7), unique=True, nullable=False)
+    num_matricula = Column(String(100), nullable=False)
     titulo = Column(String(20), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     senha = Column(String(100), nullable=False)

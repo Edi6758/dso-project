@@ -1,6 +1,6 @@
+from typing import Optional
 from package.dao.UsuarioDao import UsuarioDao
 from package.entidades.Usuario import Usuario
-from package.entidades.ValidacaoDocumentoEnum import ValidacaoDocumentoEnum
 from package.model.UsuarioDBModel import UsuarioDBModel
 from package.query.UsuarioQuery import UsuarioQuery
 from package.service.ValidacaoService import ValidacaoService
@@ -12,10 +12,10 @@ class UsuarioService:
         self.__usuarioQuery = UsuarioQuery()
         self.__usuarioDao = UsuarioDao()
 
-    def getUsuarioById(self, id) -> Usuario:
+    def getUsuarioById(self, id) -> Optional[Usuario]:
         return self.convertModelToEntity(self.__usuarioDao.read(id))
 
-    def getUsuarioByCpf(self, cpf) -> Usuario:
+    def getUsuarioByCpf(self, cpf) -> Optional[Usuario]:
         return self.convertModelToEntity(self.__usuarioQuery.getUsuarioByCpf(cpf))
 
     def deleteUsuarioById(self, id):
@@ -29,26 +29,12 @@ class UsuarioService:
         model = self.convertEntityToModel(entity)
         self.__usuarioDao.create(model)
 
-    def getValidacoesFromUsuarioDto(self, dto: dict):
-        documentos_validados = []
-        validacoes = {
-            'contrato': ValidacaoDocumentoEnum.CONTRATO,
-            'matricula': ValidacaoDocumentoEnum.MATRICULA,
-            'procuracao': ValidacaoDocumentoEnum.PROCURACAO,
-            'requerimento': ValidacaoDocumentoEnum.REQUERIMENTO,
-            'cert_civil': ValidacaoDocumentoEnum.CERT_CIVIL,
-            'cert_cnd': ValidacaoDocumentoEnum.CERT_CND,
-            'cert_casamento': ValidacaoDocumentoEnum.CERT_CASAMENTO
-        }
-        print(dto)
-        for key, value in dto.items():
-            if key in validacoes.keys() and bool(value):
-                documentos_validados.append(validacoes[key])
-
-        return documentos_validados
+    def update(self, entity: Usuario):
+        self.__usuarioDao.update(self.convertEntityToModel(entity))
 
     def getValidacoesByUsuarioId(self, id):
         usuario = self.getUsuarioById(id)
+        if not usuario: return None
         return [val for val in usuario.validacoes] if usuario.validacoes else None
 
     def saveValidacoesByUsuarioId(self, id, validacoes):
@@ -66,7 +52,8 @@ class UsuarioService:
                 dto['rg'],
                 dto['titulo'],
                 dto['email'],
-                dto['senha'])
+                dto['senha'],
+                dto['num_matricula'])
 
     def convertEntityToModel(self, entity: Usuario) -> UsuarioDBModel:
         return UsuarioDBModel(nome=entity.nome,
@@ -74,9 +61,11 @@ class UsuarioService:
                               rg=entity.rg,
                               titulo=entity.titulo,
                               email=entity.email,
+                              num_matricula=entity.num_matricula,
                               senha=entity.senha)
 
-    def convertModelToEntity(self, model) -> Usuario:
+    def convertModelToEntity(self, model) -> Optional[Usuario]:
+        if not model: return None
         return Usuario(
                 id=model.id,
                 nome=model.nome,
@@ -85,4 +74,10 @@ class UsuarioService:
                 email=model.email,
                 senha=model.senha,
                 titulo=model.titulo,
+                num_matricula=model.num_matricula,
                 validacoes=model.validacoes)
+
+    def checkForDuplicateByCpf(self, cpf) -> bool:
+        return bool(self.getUsuarioByCpf(cpf))
+
+

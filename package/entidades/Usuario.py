@@ -1,6 +1,6 @@
 
 
-from typing import List
+from typing import List, Optional
 
 
 class Usuario:
@@ -11,8 +11,9 @@ class Usuario:
             titulo: str,
             email: str,
             senha: str,
-            id: int | None = None,
-            validacoes: List | None = None):
+            num_matricula: str = '',
+            id: Optional[int] = None,
+            validacoes: Optional[List] = None):
 
         self.__id = id
         self.__nome = nome
@@ -21,6 +22,7 @@ class Usuario:
         self.__titulo = titulo
         self.__email = email
         self.__senha = senha
+        self.__num_matricula = num_matricula
         self.__validacoes = validacoes
 
     @property
@@ -78,6 +80,14 @@ class Usuario:
     @senha.setter
     def senha(self, senha):
         self.__senha = senha
+
+    @property
+    def num_matricula(self):
+        return self.__num_matricula
+
+    @num_matricula.setter
+    def num_matricula(self, num_matricula):
+        self.__num_matricula = num_matricula
 
     @property
     def validacoes(self):

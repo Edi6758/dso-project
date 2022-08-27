@@ -43,3 +43,4 @@ class ValidacaoService:
     def find(self, reference: str, text: str) -> bool:
         result = bool(re.compile(reference, re.IGNORECASE).findall(text))
         return result
+
