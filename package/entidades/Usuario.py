@@ -1,22 +1,25 @@
-
-
+import datetime
 from typing import List, Optional
 
 
 class Usuario:
-    def __init__(self,
-            nome: str,
-            cpf: str,
-            rg: str,
-            titulo: str,
-            email: str,
-            senha: str,
-            num_matricula: str = '',
-            id: Optional[int] = None,
-            validacoes: Optional[List] = None):
+    def __init__(
+        self,
+        nome: str,
+        nascimento: datetime.date,
+        cpf: str,
+        rg: str,
+        titulo: str,
+        email: str,
+        senha: str,
+        num_matricula: str = "",
+        id: Optional[int] = None,
+        validacoes: Optional[List] = None,
+    ):
 
         self.__id = id
         self.__nome = nome
+        self.__nascimento = nascimento
         self.__cpf = cpf
         self.__rg = rg
         self.__titulo = titulo
@@ -88,6 +91,14 @@ class Usuario:
     @num_matricula.setter
     def num_matricula(self, num_matricula):
         self.__num_matricula = num_matricula
+
+    @property
+    def nascimento(self):
+        return self.__nascimento
+
+    @nascimento.setter
+    def nascimento(self, nascimento):
+        self.__nascimento = nascimento
 
     @property
     def validacoes(self):

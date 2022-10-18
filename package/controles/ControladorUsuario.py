@@ -19,7 +19,8 @@ class ControladorUsuario:
         dados_usuario: Optional[dict] = self.__tela_usuario.cadastrar_usuario()
         try:
             model = self.__usuarioService.convertDictToEntity(dados_usuario)
-            if self.__usuarioService.checkForDuplicateByCpf(model.cpf): raise UsuarioJahCadastrado
+            if self.__usuarioService.checkForDuplicateByCpf(model.cpf):
+                raise UsuarioJahCadastrado
             self.__usuarioService.persist(model)
         except UsuarioJahCadastrado:
             self.__tela_exception.UsuarioJahCadastrado()

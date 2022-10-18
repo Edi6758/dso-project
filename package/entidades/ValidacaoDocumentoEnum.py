@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ValidacaoDocumentoEnum(Enum):
     CONTRATO = 1
     MATRICULA = 2
@@ -8,3 +9,9 @@ class ValidacaoDocumentoEnum(Enum):
     CERT_CIVIL = 5
     CERT_CND = 6
     CERT_CASAMENTO = 7
+    DOCUMENTO_IDENTIDADE_NACIONAL = 8
+    CERTIFICADO_NACIONAL_HABILITACAO = 9
+    CERTIDAO_TRABALHISTA = 10
+    CERTIDAO_NASCIMENTO = 11
+    CERTIDAO_ESTADUAL = 12
+    CERTIDAO_FEDERAL = 13

@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from package.dao.UsuarioDao import UsuarioDao
 from package.entidades.Usuario import Usuario
@@ -34,50 +35,58 @@ class UsuarioService:
 
     def getValidacoesByUsuarioId(self, id):
         usuario = self.getUsuarioById(id)
-        if not usuario: return None
+        if not usuario:
+            return None
         return [val for val in usuario.validacoes] if usuario.validacoes else None
 
     def saveValidacoesByUsuarioId(self, id, validacoes):
         for validacao in validacoes:
             self.__validacao_service.persist(
-                self.__validacao_service.convertDictToModel({
-                    'usuario_id': id,
-                    'tipo_validacao_id': validacao.value
-                }))
+                self.__validacao_service.convertDictToModel(
+                    {"usuario_id": id, "tipo_validacao_id": validacao.value}
+                )
+            )
 
     def convertDictToEntity(self, dto: dict) -> Usuario:
-            return Usuario(
-                dto['nome'],
-                dto['cpf'],
-                dto['rg'],
-                dto['titulo'],
-                dto['email'],
-                dto['senha'],
-                dto['num_matricula'])
+        print(dto)
+        return Usuario(
+            dto["nome"],
+            datetime.strptime(dto["nascimento"], "%Y-%m-%d %H:%M:%S").date(),
+            dto["cpf"],
+            dto["rg"],
+            dto["titulo"],
+            dto["email"],
+            dto["senha"],
+            dto["num_matricula"],
+        )
 
     def convertEntityToModel(self, entity: Usuario) -> UsuarioDBModel:
-        return UsuarioDBModel(nome=entity.nome,
-                              cpf=entity.cpf,
-                              rg=entity.rg,
-                              titulo=entity.titulo,
-                              email=entity.email,
-                              num_matricula=entity.num_matricula,
-                              senha=entity.senha)
+        return UsuarioDBModel(
+            nome=entity.nome,
+            nascimento=entity.nascimento,
+            cpf=entity.cpf,
+            rg=entity.rg,
+            titulo=entity.titulo,
+            email=entity.email,
+            num_matricula=entity.num_matricula,
+            senha=entity.senha,
+        )
 
     def convertModelToEntity(self, model) -> Optional[Usuario]:
-        if not model: return None
+        if not model:
+            return None
         return Usuario(
-                id=model.id,
-                nome=model.nome,
-                cpf=model.cpf,
-                rg=model.rg,
-                email=model.email,
-                senha=model.senha,
-                titulo=model.titulo,
-                num_matricula=model.num_matricula,
-                validacoes=model.validacoes)
+            id=model.id,
+            nome=model.nome,
+            nascimento=model.nascimento,
+            cpf=model.cpf,
+            rg=model.rg,
+            email=model.email,
+            senha=model.senha,
+            titulo=model.titulo,
+            num_matricula=model.num_matricula,
+            validacoes=model.validacoes,
+        )
 
     def checkForDuplicateByCpf(self, cpf) -> bool:
         return bool(self.getUsuarioByCpf(cpf))
-
-
